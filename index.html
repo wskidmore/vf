@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vocab Fun</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Libraries -->
+    <link href="lib/compressed/jquery.mobile-1.0rc2pre.min.css" rel="stylesheet" media="screen">
+    <script src="lib/compressed/jquery.1.6.4.min.js"></script>
+    <script src="lib/compressed/jquery.mobile-1.0rc2pre.min.js"></script>
+
+    <!-- Application -->
+    <link rel="stylesheet" href="content/css/style.css" media="screen">
+    <link rel="shortcut icon" href="favicon.ico">
+    <script src="src/app.js"></script>
+    <script src="src/utils.js"></script>
+
+    <!-- Views -->
+    <script src="src/controllers/type.js"></script>
+    <script src="src/controllers/selectlist.js"></script>
+    <script src="src/controllers/play.js"></script>
+    <script src="src/controllers/statistics.js"></script>
+
+
+    <script>
+        VF.init();
+    </script>
+
+</head>
+<body>
+<div data-role="page" id="home">
+	<div data-role="header" data-theme="b">
+		<h1>Vocab Fun</h1>
+	</div>
+
+	<div data-role="content">
+        <ul data-role="listview">
+            <li><a href="src/views/selectlist.html">Play</a></li>
+            <li><a href="src/views/about.html">About</a></li>
+            <li><a href="src/views/statistics.html">Stats</a></li>
+        </ul>
+    </div>
+
+	<div data-role="footer" data-position="fixed" data-id="foot">
+        wskidmore.com
+	</div>
+</div>
+</body>
+</html>

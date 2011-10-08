@@ -1,0 +1,14 @@
+{
+    "dictionaries": [
+        {
+			"name": "SAT",
+			"description": "Words commonly seen in Scholastic Aptitude Tests",
+			"file": "src/dict/sat.json"
+        },
+        {
+            "name": "GRE",
+            "description": "Words commonly seen in Graduate Record Examinations",
+            "file": "src/dict/gre.json"
+        }
+    ]
+}
