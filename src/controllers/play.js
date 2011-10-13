@@ -157,8 +157,8 @@
         var item,
             i=3;
         item = Play.getNewItem(false);
-        Play.currentWord = item.word;
-        Play.currentAnswer = item.def;
+        Play.currentWord = item.def;
+        Play.currentAnswer = item.word;
 
         Play.badAnswers = [];
         while(i--){

@@ -29,6 +29,7 @@
     VF.init = function(){
         VF.loadControllers();
         VF.loadResources();
+        VF.loadEvents();
         VF.load();
     };
     VF.loadControllers = function(){
@@ -75,6 +76,14 @@
                 alert('Error: Could not load resources!');
             }
         });
+    };
+    VF.loadEvents = function(){
+        var $window = $(window);
+        $window.bind('orientationchange', VF.onOrientationChange);
+        $window.trigger('orientationchange');
+    };
+    VF.onOrientationChange = function(evt){
+        $('html').removeClass('portrait landscape').addClass(evt.orientation);
     };
 
 
