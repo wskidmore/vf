@@ -2,7 +2,7 @@
     Type.id = 'type';
 
     Type.create = function(){
-        $('button[data-play]').click(function(){
+        $('a[data-play]', '#'+Type.id).click(function(){
             VF.gameType = $(this).attr('data-play');
             $.mobile.changePage('play.html');
             if(VF.numDicts > 0){

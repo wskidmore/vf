@@ -2,6 +2,9 @@
     Util.getRandomInt = function (min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     };
+    Util.randomArrayEl = function(array){
+        return array[Util.getRandomInt(0, array.length)];   
+    };
     Util.padTo = function(number, size){
         size -= number.toString().length;
         if (size > 0)

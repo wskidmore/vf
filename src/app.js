@@ -15,6 +15,9 @@
         'finished','answersTally','gameType'
     ];
     VF.loading = true;
+    VF.messages = {};
+    VF.name = "VocabFun";
+
 
     VF.save = function(){
         $.each(VF.keysToSave, function(index, key){
@@ -29,6 +32,7 @@
     VF.init = function(){
         VF.loadControllers();
         VF.loadResources();
+        VF.loadMessages();
         VF.loadEvents();
         VF.load();
     };
@@ -38,6 +42,19 @@
             currentController = VF.controllers[controller];
             $('#'+currentController.id).live('pagecreate', currentController.create);
         }
+    };
+    VF.loadMessages = function(){
+        $.ajax({
+            url: 'src/messages.json',
+            dataType: 'json',
+            success: function(data) {
+                VF.messages = data;
+            },
+            error: function(){
+                console.log(arguments);
+                alert('Error: Could not load messages!');
+            }
+        });
     };
     VF.loadResources = function(){
         VF.resources = {};

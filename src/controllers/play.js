@@ -43,8 +43,15 @@
         }
         VF.save();
     };
+    Play.showMessage = function(message){
+        if($.isArray(message))
+            message = VF.utils.randomArrayEl(message);
+        $('#playTitle').text(message);
+    };
+    
     Play.answerIsCorrect = function(){
         Play.updateCorrectScore(1);
+        Play.showMessage(VF.messages.correct);
         Play.addCurrentToFinished();
     };
 
@@ -55,6 +62,7 @@
     Play.answerIsWrong = function(){
         $('input[name="play-answer"][value="0"]', '#play').next('label').addClass('ui-btn-up-g');
         Play.updateWrongScore(1);
+        Play.showMessage(VF.messages.wrong);
     };
 
     Play.updateCorrectScore = function(points){
@@ -140,11 +148,15 @@
     Play.endTimer = function(){
         clearTimeout(Play.timer);
     };
+    Play.setDefaultTitle = function(){
+        Play.showMessage(VF.name);
+    };
     Play.next = function(){
         var type = 'next'+VF.gameType.replace('Timed','');
         Play[type]();
         $('#play-submit-div').show();
         $('#play-next-div').hide();
+        Play.setDefaultTitle();
         $('input[name="play-answer"]', '#play').each(function(){
             $(this).prop('checked', false).checkboxradio("refresh");
         });
