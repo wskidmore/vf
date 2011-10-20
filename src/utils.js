@@ -19,11 +19,18 @@
     };
     Util.getObject = function(key){
         var item = localStorage.getItem(key);
-        return item
-               ? JSON.parse(item)
-               : {};
+        return item ? JSON.parse(item) : {};
     };
-
+    Util.playSound = function(soundPath){
+        var node = $('#audio');
+        node.attr({src:soundPath+'.ogg'});
+        node.bind('load',function(evt){
+            console.log(evt);
+            evt.target.play();
+            $('#audio').unbind('load');
+        });
+        node[0].load();
+    };
 
 
 })(window.VF.utils = VF.utils || {}, document);

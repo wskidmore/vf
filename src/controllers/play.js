@@ -51,6 +51,7 @@
     
     Play.answerIsCorrect = function(){
         Play.updateCorrectScore(1);
+        VF.utils.playSound(VF.sounds.correct);
         Play.showMessage(VF.messages.correct);
         Play.addCurrentToFinished();
     };
@@ -62,6 +63,7 @@
     Play.answerIsWrong = function(){
         $('input[name="play-answer"][value="0"]', '#play').next('label').addClass('ui-btn-up-g');
         Play.updateWrongScore(1);
+        VF.utils.playSound(VF.sounds.wrong);
         Play.showMessage(VF.messages.wrong);
     };
 

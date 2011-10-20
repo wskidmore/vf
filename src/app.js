@@ -5,6 +5,10 @@
     VF.finished = {};
     VF.answersTally = {};
     VF.gameType = 'word';
+    VF.sounds = {
+        "correct": "../../content/sounds/correct",
+        "wrong": "../../content/sounds/wrong"
+    };
     VF.timers = {
         'WordTimed' : 10,
         'DefTimed' : 60,
@@ -73,18 +77,7 @@
                         url: dictionary.file,
                         dataType: 'json',
                         context: dictionary,
-                        success: function(data){
-                            $.extend(this, data);
-                            VF.resources[this.name] = this;
-                            VF.finished[this.name] = [];
-                            VF.numDicts += 1;
-                                /* add some sort of event?? */
-                            if(VF.numDicts === this.max) {
-                                VF.loading = false;
-                                if($('.ui-page-active').attr('id') === 'play')
-                                    VF.controllers.play.next();
-                            }
-                        }
+                        success: VF.loadDictSuccess
                     });
                 }
             },
@@ -94,6 +87,20 @@
             }
         });
     };
+    VF.loadDictSuccess = function(data){
+        $.extend(this, data);
+        VF.resources[this.name] = this;
+        VF.finished[this.name] = [];
+        VF.numDicts += 1;
+        // todo:  add some sort of event?
+        if(VF.numDicts === this.max) {
+            VF.loading = false;
+            if($('.ui-page-active').attr('id') === 'play')
+                VF.controllers.play.next();
+        }
+    };
+    
+    
     VF.loadEvents = function(){
         var $window = $(window);
         $window.bind('orientationchange', VF.onOrientationChange);
