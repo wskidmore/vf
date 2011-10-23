@@ -24,6 +24,8 @@
         Play.updateCorrectScore(0);
         Play.updateWrongScore(0);
     };
+    Play.init = function(){
+    };
     Play.selectAnswer = function(){
         var selectedElement = $('input[name="play-answer"]:checked', '#play');
         Play.endTimer();

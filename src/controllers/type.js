@@ -11,6 +11,8 @@
         });
 
     };
+    Type.init = function(){
+    };
 
 
 })(window.VF.controllers.type = VF.controllers.type || {}, document);

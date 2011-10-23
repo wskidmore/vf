@@ -20,6 +20,7 @@
     <script src="src/controllers/selectlist.js"></script>
     <script src="src/controllers/play.js"></script>
     <script src="src/controllers/statistics.js"></script>
+    <script src="src/controllers/settings.js"></script>
 
 
     <script>
@@ -36,18 +37,22 @@
 	<div data-role="content">
         <ul data-role="listview">
             <li><a href="src/views/selectlist.html">Play</a></li>
-            <li><a href="src/views/about.html">About</a></li>
             <li><a href="src/views/statistics.html">Stats</a></li>
+            <li><a href="src/views/settings.html">Settings</a></li>
+            <li><a href="src/views/about.html">About</a></li>
         </ul>
     </div>
-
-	<div data-role="footer" data-position="fixed" data-id="foot">
-        wskidmore.com
-	</div>
 </div>
 
 <!-- audio -->
-<audio id="audio" hidden="true"></audio>
+<audio id="sound-correct" hidden="true" preload="auto">
+    <source src="content/sounds/correct.mp3" type="audio/mp3" />
+    <source src="content/sounds/correct.ogg" type="audio/ogg" />
+</audio>
+<audio id="sound-wrong" hidden="true" preload="auto">
+    <source src="content/sounds/wrong.mp3" type="audio/mp3" />
+    <source src="content/sounds/wrong.ogg" type="audio/ogg" />
+</audio>
 
 </body>
 </html>

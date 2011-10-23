@@ -6,8 +6,8 @@
     VF.answersTally = {};
     VF.gameType = 'word';
     VF.sounds = {
-        "correct": "../../content/sounds/correct",
-        "wrong": "../../content/sounds/wrong"
+        "correct": "sound-correct",
+        "wrong": "sound-wrong"
     };
     VF.timers = {
         'WordTimed' : 10,
@@ -16,11 +16,14 @@
         'OddTimed' : 30
     };
     VF.keysToSave = [
-        'finished','answersTally','gameType'
+        'finished','answersTally','gameType', 'preferences'
     ];
     VF.loading = true;
     VF.messages = {};
     VF.name = "VocabFun";
+    VF.preferences = {
+        soundEnabled: true    
+    };
 
 
     VF.save = function(){
@@ -45,6 +48,7 @@
         for(controller in VF.controllers){
             currentController = VF.controllers[controller];
             $('#'+currentController.id).live('pagecreate', currentController.create);
+            $('#'+currentController.id).live('pageinit', currentController.init);
         }
     };
     VF.loadMessages = function(){
@@ -90,7 +94,7 @@
     VF.loadDictSuccess = function(data){
         $.extend(this, data);
         VF.resources[this.name] = this;
-        VF.finished[this.name] = [];
+        VF.finished[this.name] = VF.finished[this.name] || [];
         VF.numDicts += 1;
         // todo:  add some sort of event?
         if(VF.numDicts === this.max) {

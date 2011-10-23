@@ -2,10 +2,19 @@
     SelectList.id = 'selectlist';
 
     SelectList.create = function(){
-        var listsHtml = '';
+        var listsHtml = '',
+            resNames = [],
+            sortedResources = [];
+        $.each(VF.resources, function(){
+            resNames.push(this.name);
+        });
+        resNames.sort();
+        $.each(resNames, function(){
+            sortedResources.push(VF.resources[this]);
+        });
 
         
-        $.each(VF.resources, function(){
+        $.each(sortedResources, function(){
             listsHtml += SelectList.addList(this);
         });
 
@@ -27,6 +36,8 @@
         var template = '<input type="radio" name="selectlist-wordList" id="radio-${name}" value="${name}" />'+
         '<label for="radio-${name}">${name}</label>';
         return VF.utils.sub(template,list);
+    };
+    SelectList.init = function(){
     };
 
 

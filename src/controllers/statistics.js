@@ -43,5 +43,8 @@
         ].join('');
         return VF.utils.sub(template, answerInfo);
     };
+    Stats.init = function(){
+    };
+    
 
 })(window.VF.controllers.stats = VF.controllers.stats || {}, document);

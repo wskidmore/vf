@@ -21,15 +21,12 @@
         var item = localStorage.getItem(key);
         return item ? JSON.parse(item) : {};
     };
-    Util.playSound = function(soundPath){
-        var node = $('#audio');
-        node.attr({src:soundPath+'.ogg'});
-        node.bind('load',function(evt){
-            console.log(evt);
-            evt.target.play();
-            $('#audio').unbind('load');
-        });
-        node[0].load();
+    Util.playSound = function(soundId){
+        var node = document.getElementById(soundId);
+        if(!VF.preferences.soundEnabled || !node) 
+            return;
+        node.pause();
+        node.play();
     };
 
 
