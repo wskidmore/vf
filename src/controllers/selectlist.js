@@ -5,18 +5,27 @@
         var listsHtml = '',
             resNames = [],
             sortedResources = [];
-        $.each(VF.resources, function(){
+        $.each(VF.data.resources, function(){
             resNames.push(this.name);
         });
         resNames.sort();
         $.each(resNames, function(){
-            sortedResources.push(VF.resources[this]);
+            sortedResources.push(VF.data.resources[this]);
         });
 
-        
+        var categories = {};
         $.each(sortedResources, function(){
-            listsHtml += SelectList.addList(this);
+            if(categories[this.category])
+                categories[this.category].push(this);
+            else
+                categories[this.category] = [this];
         });
+        for(var key in categories){
+            listsHtml += SelectList.startCategory(key);
+            $.each(categories[key], function(index, item){
+                listsHtml += SelectList.addList(item);
+            });
+        };
 
         $('#selectlist-wordLists').append(listsHtml).fieldcontain('refresh', true);
 
@@ -24,13 +33,17 @@
             var dictName = $('#selectlist-wordLists input:radio[name=selectlist-wordList]:checked').val(),
                 dict = SelectList.selectDict(dictName),
                 dictLength = dict.list.length;
-            VF.controllers.play.currentDict = dict;
-            VF.controllers.play.currentDictLength = dictLength;
+            VF.data.currentDict = dict;
+            VF.data.currentDictLength = dictLength;
             $.mobile.changePage('type.html');
         });
     };
     SelectList.selectDict = function(name){
-        return VF.resources[name];
+        return VF.data.resources[name];
+    };
+    SelectList.startCategory = function(category){
+        var template = '<h2 style="margin-bottom: 1px; padding: 3px 0px 3px 6px;" class="ui-title ui-bar-b ui-shadow ui-corner-all">${category}</h2>';
+        return VF.utils.sub(template,{category:category});
     };
     SelectList.addList = function(list){
         var template = '<input type="radio" name="selectlist-wordList" id="radio-${name}" value="${name}" />'+

@@ -3,8 +3,8 @@
 
     Stats.create = function(){
         var statContent = [];
-        for(var dict in VF.answersTally){
-            statContent.push(Stats.addBar(dict, VF.answersTally[dict]));
+        for(var dict in VF.data.answersTally){
+            statContent.push(Stats.addBar(dict, VF.data.answersTally[dict]));
         }
         $('#statistics-list').append(statContent.join(''));
         Stats.applySizes();
@@ -21,6 +21,7 @@
             current = parseFloat($$.attr('data-current'), 10),
             percentage =  (current / total) * 100;
         if(percentage > 10) percentage -= 1;
+        percentage = VF.utils.clamp(percentage, 1,99);
         $$.css('width', percentage+'%');
     };
 
@@ -29,13 +30,11 @@
             '<div data-role="collapsible" data-collapsed="true">',
             '<h2>',name,'</h2>',
             '<p>Correct: ${correct}<br/>',
-            '<p>Wrong: ${wrong}<br/>',
-            '<p>Remaining: ',(answerInfo.total - (answerInfo.correct + answerInfo.wrong)),
+            '<p>Remaining: ',VF.utils.clamp((answerInfo.total - answerInfo.correct),0,answerInfo.total),
             '<div class="statBar">',
                 '<div class="info correct" data-total="${total}" data-current="${correct}"></div>',
-                '<div class="info wrong" data-total="${total}" data-current="${wrong}"></div>',
                 '<div class="info remaining" data-total="${total}" data-current="',
-                    answerInfo.total - (answerInfo.correct + answerInfo.wrong),
+                    answerInfo.total - answerInfo.correct,
                 '">',
                 '</div>',
             '</div>',

@@ -1,10 +1,20 @@
 (function(VF,document,undefined){
+    
+    VF.data = {
+        answersTally: {},
+        currentDict: null,
+        currentDictLength: 0,
+        finished: {},
+        gameType: 'word',
+        resources: {},
+        numDicts: 0,
+        preferences: {
+            soundEnabled: true    
+        }
+    };
+
     VF.controllers = {};
-    VF.resources = null;
-    VF.numDicts = 0;
-    VF.finished = {};
-    VF.answersTally = {};
-    VF.gameType = 'word';
+    VF.loadAttempts = 0;
     VF.sounds = {
         "correct": "sound-correct",
         "wrong": "sound-wrong"
@@ -15,34 +25,54 @@
         'PatternTimed' : 120,
         'OddTimed' : 30
     };
-    VF.keysToSave = [
-        'finished','answersTally','gameType', 'preferences'
-    ];
     VF.loading = true;
     VF.messages = {};
     VF.name = "VocabFun";
-    VF.preferences = {
-        soundEnabled: true    
-    };
-
 
     VF.save = function(){
-        $.each(VF.keysToSave, function(index, key){
-            VF.utils.setObject(key, VF[key]);
-        });
+        VF.utils.setObject('vfdata', VF.data);
     };
     VF.load = function(){
-        $.each(VF.keysToSave, function(index, key){
-            VF[key] = VF.utils.getObject(key);
-        });
+        var loaded = VF.utils.getObject('vfdata');
+        if(loaded && !VF.utils.isObjectEmpty(loaded)) {
+            VF.data = loaded;
+            return true;
+        }
+        return false;
     };
     VF.init = function(){
         VF.loadControllers();
         VF.loadResources();
         VF.loadMessages();
         VF.loadEvents();
-        VF.load();
+
+        var loaded = VF.load();
+        if(loaded)
+            VF.addResume();
+            
+        $( $.mobile.initializePage );
     };
+    VF.addResume = function(){
+        var link = $('<li><a href="#">Resume</a></li>');
+        $('#home-list').prepend(link);
+        link.click(function(){
+            VF.startGame('src/views/');
+        });
+    };
+    VF.startGame = function(root){
+        VF.loadAttempts++;
+        if(VF.data.numDicts > 0) {
+            $.mobile.changePage(root+'play.html');
+            VF.controllers.play.next();
+            return;
+        }
+        if(VF.loadAttempts > 30){
+            alert('Unable to start - timed out.');
+            return;
+        }
+        setTimeout(VF.startGame, 500);
+    };
+    
     VF.loadControllers = function(){
         var controller, currentController;
         for(controller in VF.controllers){
@@ -52,6 +82,7 @@
         }
     };
     VF.loadMessages = function(){
+        if(!VF.utils.isObjectEmpty(VF.data.messages)) return;
         $.ajax({
             url: 'src/messages.json',
             dataType: 'json',
@@ -65,7 +96,7 @@
         });
     };
     VF.loadResources = function(){
-        VF.resources = {};
+        if(!VF.utils.isObjectEmpty(VF.data.resources)) return;
         $.ajax({
             url: 'src/dict-resources.json',
             dataType: 'json',
@@ -93,11 +124,11 @@
     };
     VF.loadDictSuccess = function(data){
         $.extend(this, data);
-        VF.resources[this.name] = this;
-        VF.finished[this.name] = VF.finished[this.name] || [];
-        VF.numDicts += 1;
+        VF.data.resources[this.name] = this;
+        VF.data.finished[this.name] = VF.data.finished[this.name] || [];
+        VF.data.numDicts += 1;
         // todo:  add some sort of event?
-        if(VF.numDicts === this.max) {
+        if(VF.data.numDicts === this.max) {
             VF.loading = false;
             if($('.ui-page-active').attr('id') === 'play')
                 VF.controllers.play.next();

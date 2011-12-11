@@ -3,11 +3,8 @@
 
     Type.create = function(){
         $('a[data-play]', '#'+Type.id).click(function(){
-            VF.gameType = $(this).attr('data-play');
-            $.mobile.changePage('play.html');
-            if(VF.numDicts > 0){
-                VF.controllers.play.next();
-            }
+            VF.data.gameType = $(this).attr('data-play');
+            VF.startGame('');
         });
 
     };

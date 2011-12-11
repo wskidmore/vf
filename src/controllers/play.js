@@ -1,6 +1,5 @@
 (function(Play,document,undefined){
     Play.id = 'play';
-    Play.currentDict = '';
     Play.isCreated = false;
 
     Play.currentWord = null;
@@ -59,7 +58,7 @@
     };
 
     Play.addCurrentToFinished = function(){
-        VF.finished[Play.currentDict.name].push(Play.currentWordIndex);
+        VF.data.finished[VF.data.currentDict.name].push(Play.currentWordIndex);
     };
 
     Play.answerIsWrong = function(){
@@ -70,36 +69,41 @@
     };
 
     Play.updateCorrectScore = function(points){
-        var tally = VF.answersTally[Play.currentDict.name];
+        var tally = VF.data.answersTally[VF.data.currentDict.name];
         if(tally){
-            VF.answersTally[Play.currentDict.name].correct += points;
+            VF.data.answersTally[VF.data.currentDict.name].correct += points;
         } else {
-            VF.answersTally[Play.currentDict.name] = {
+            VF.data.answersTally[VF.data.currentDict.name] = {
                 correct: points,
                 wrong: 0,
-                total: Play.currentDictLength
+                total: VF.data.currentDictLength
             };
         }
-        $('#correct').html(VF.answersTally[Play.currentDict.name].correct);
+        $('#correct').html(VF.data.answersTally[VF.data.currentDict.name].correct);
     };
     Play.updateWrongScore = function(points){
-        var tally = VF.answersTally[Play.currentDict.name];
+        var tally = VF.data.answersTally[VF.data.currentDict.name];
         if(tally){
-            VF.answersTally[Play.currentDict.name].wrong += points;
+            VF.data.answersTally[VF.data.currentDict.name].wrong += points;
         } else {
-            VF.answersTally[Play.currentDict.name] = {
+            VF.data.answersTally[VF.data.currentDict.name] = {
                 correct: 0,
                 wrong: points,
                 total: Play.currentDictLength
             };
         }
-        $('#wrong').html(VF.answersTally[Play.currentDict.name].wrong);
+        $('#wrong').html(VF.data.answersTally[VF.data.currentDict.name].wrong);
+    };
+    Play.insertText = function(node, content){
+        node.hide();
+        node.text(content);
+        node.show('slow');
     };
 
     Play.updateHtml = function(){
         Play.cleanCSS();
 
-        $('#word').html(Play.currentWord);
+        Play.insertText($('#word'), Play.currentWord);
         var answerIds = [0,1,2,3],
             correctId = VF.utils.getRandomInt(0,4),
             i=3;
@@ -113,10 +117,13 @@
     };
     Play.updateChoice = function(id,val,def){
         var el = $('#play-answer'+id);
+        var node = null;
         if(el.next('label').children().length > 0){
-            el.val(val).next('label').children().eq(0).children().eq(0).html(def);
+            node = el.val(val).next('label').children().eq(0).children().eq(0);
+            Play.insertText(node, def);
         } else {
-            el.val(val).next('label').html(def);
+            node = el.val(val).next('label');
+            node.text(def);
         }
     };
 
@@ -126,7 +133,7 @@
         });
     };
     Play.startTimer = function(){
-        Play.time = VF.timers[VF.gameType];
+        Play.time = VF.timers[VF.data.gameType];
         Play.timer = setTimeout(Play.updateTimer,1000);
     };
     Play.updateTimer = function(){
@@ -156,7 +163,7 @@
         Play.showMessage(VF.name);
     };
     Play.next = function(){
-        var type = 'next'+VF.gameType.replace('Timed','');
+        var type = 'next'+VF.data.gameType.replace('Timed','');
         Play[type]();
         $('#play-submit-div').show();
         $('#play-next-div').hide();
@@ -164,7 +171,7 @@
         $('input[name="play-answer"]', '#play').each(function(){
             $(this).prop('checked', false).checkboxradio("refresh");
         });
-        if(VF.gameType.indexOf('Time')!==-1){
+        if(VF.data.gameType.indexOf('Time')!==-1){
             Play.startTimer();
         }
     };
@@ -200,15 +207,13 @@
     };
 
     Play.getNewItem = function(isRandom){
-        var wordNum = VF.utils.getRandomInt(0,Play.currentDictLength);
-        while(((isRandom)
-                ? Play.currentWordIndex === wordNum
-                : $.inArray(wordNum, VF.finished[Play.currentDict.name]) !== -1)){
-            console.log('while looping');
-            wordNum = VF.utils.getRandomInt(0,Play.currentDictLength);
+        var wordNum = VF.utils.getRandomInt(0,VF.data.currentDictLength);
+        while(((isRandom) ? Play.currentWordIndex === wordNum
+                : $.inArray(wordNum, VF.data.finished[VF.data.currentDict.name]) !== -1)){
+            wordNum = VF.utils.getRandomInt(0,VF.data.currentDictLength);
         }
         if(!isRandom) Play.currentWordIndex = wordNum;
-        return Play.currentDict.list[wordNum];
+        return VF.data.currentDict.list[wordNum];
     };
 
 })(window.VF.controllers.play = VF.controllers.play || {}, document);

@@ -21,9 +21,19 @@
         var item = localStorage.getItem(key);
         return item ? JSON.parse(item) : {};
     };
+    Util.isObjectEmpty = function(obj){
+       for(var key in obj) {
+          if (obj.hasOwnProperty(key))
+             return false;
+       }
+       return true;
+    };
+    Util.clamp = function(val, min, max){
+        return Math.max(min, Math.min(max, val));    
+    };
     Util.playSound = function(soundId){
         var node = document.getElementById(soundId);
-        if(!VF.preferences.soundEnabled || !node) 
+        if(!VF.data.preferences.soundEnabled || !node) 
             return;
         node.pause();
         node.play();
