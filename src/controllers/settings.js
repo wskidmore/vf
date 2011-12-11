@@ -2,12 +2,18 @@
     Settings.id = 'settings';
     Settings.init = function(){
         var soundEnabled = $('#settings-soundEnable');
-        soundEnabled.prop("value",VF.preferences.soundEnabled || true);
+        soundEnabled.prop("value",VF.data.preferences.soundEnabled || true);
         soundEnabled.slider("refresh");
         soundEnabled.change(function(evt){
-            VF.preferences.soundEnabled = evt.target.value;
+            VF.data.preferences.soundEnabled = evt.target.value;
             VF.save();
         });
+        $('#settings-clear').click(function(){
+            if (window.localStorage)
+                window.localStorage.clear();
+            alert('All Saved Data Erased');
+        });
+        
     };
     Settings.create = function(){
     };
