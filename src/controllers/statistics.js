@@ -2,13 +2,28 @@
     Stats.id = 'stats';
 
     Stats.create = function(){
-        var statContent = [];
+        var statContent = [], totalCorrect=0, totalWrong=0;
+		
         for(var dict in VF.data.answersTally){
+			totalCorrect += VF.data.answersTally[dict].correct;
+			totalWrong += VF.data.answersTally[dict].wrong;
             statContent.push(Stats.addBar(dict, VF.data.answersTally[dict]));
         }
         $('#statistics-list').append(statContent.join(''));
         Stats.applySizes();
+		
+		
+		Stats.addTotals(totalCorrect, totalWrong);
+		
     };
+	
+	Stats.addTotals = function(correct, wrong){
+		var accuracy = ( (correct / (correct+wrong)) * 100).toFixed(2);
+		$('#stats-total_correct').html(correct);
+		$('#stats-total_wrong').html(wrong);
+		$('#stats-accuracy').html(accuracy);
+	};
+	
     Stats.applySizes = function(){
         var barPieces = $('div.statBar > div.info');
         barPieces.each(function(i, node){
