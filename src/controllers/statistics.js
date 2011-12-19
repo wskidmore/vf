@@ -2,23 +2,24 @@
     Stats.id = 'stats';
 
     Stats.create = function(){
-        var statContent = [], totalCorrect=0, totalWrong=0;
+        var statContent = [];
 		
         for(var dict in VF.data.answersTally){
-			totalCorrect += VF.data.answersTally[dict].correct;
-			totalWrong += VF.data.answersTally[dict].wrong;
+            if(dict === '_correct' || dict==='_wrong') continue;
             statContent.push(Stats.addBar(dict, VF.data.answersTally[dict]));
         }
         $('#statistics-list').append(statContent.join(''));
         Stats.applySizes();
 		
 		
-		Stats.addTotals(totalCorrect, totalWrong);
+		Stats.addTotals();
 		
     };
 	
 	Stats.addTotals = function(correct, wrong){
-		var accuracy = ( (correct / (correct+wrong)) * 100).toFixed(2);
+        var correct= VF.data.answersTally._correct,
+            wrong = VF.data.answersTally._wrong,
+		    accuracy = ( (correct / (correct+wrong)) * 100).toFixed(2);
 		$('#stats-total_correct').html(correct);
 		$('#stats-total_wrong').html(wrong);
 		$('#stats-accuracy').html(accuracy);
@@ -36,7 +37,7 @@
             current = parseFloat($$.attr('data-current'), 10),
             percentage =  (current / total) * 100;
         if(percentage > 10) percentage -= 1;
-        percentage = VF.utils.clamp(percentage, 1,99);
+        percentage = VF.utils.clamp(percentage, 1,98);
         $$.css('width', percentage+'%');
     };
 

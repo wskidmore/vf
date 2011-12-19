@@ -1,17 +1,23 @@
 (function(VF,document,undefined){
     
     VF.data = {
-        answersTally: {},
+        answersTally: {
+            _correct: 0,
+            _wrong: 0,
+        },
         currentDict: null,
         currentDictLength: 0,
         finished: {},
         gameType: 'word',
-        resources: {},
+        correctStreak: 0,
+        trophy: {},
         numDicts: 0,
         preferences: {
             soundEnabled: true    
         }
     };
+    VF.resources = {};
+
 
     VF.controllers = {};
     VF.loadAttempts = 0;
@@ -96,7 +102,7 @@
         });
     };
     VF.loadResources = function(){
-        if(!VF.utils.isObjectEmpty(VF.data.resources)) return;
+        if(!VF.utils.isObjectEmpty(VF.resources)) return;
         $.ajax({
             url: 'src/dict-resources.json',
             dataType: 'json',
@@ -124,7 +130,7 @@
     };
     VF.loadDictSuccess = function(data){
         $.extend(this, data);
-        VF.data.resources[this.name] = this;
+        VF.resources[this.name] = this;
         VF.data.finished[this.name] = VF.data.finished[this.name] || [];
         VF.data.numDicts += 1;
         // todo:  add some sort of event?
@@ -134,7 +140,27 @@
                 VF.controllers.play.next();
         }
     };
+    VF.trophyCheck = function(){
+        $.each(VF.trophy.trophies, function(i, item){
+            if(VF.data.trophy[item.name]) return;
+            
+            var earned = item.hasEarned(VF.data);
+            if (!earned) return;
+            
+            VF.data.trophy[item.name] = true;
+            VF.showMessage(item.title, item.description, 'trophy-light');
+        });
+    };
     
+    VF.showMessage = function(title, message, icon){
+        $('#message-title').html(title);
+        $('#message-message').html(message)
+        if(icon)
+            $('#message-icon').attr('src','../../content/images/'+icon+'.png').show();
+        else 
+            $('#message-icon').hide();
+        $.mobile.changePage( $("#message"), { role: "dialog"} );
+    };
     
     VF.loadEvents = function(){
         var $window = $(window);

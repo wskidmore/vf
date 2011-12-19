@@ -52,47 +52,51 @@
     
     Play.answerIsCorrect = function(){
         Play.updateCorrectScore(1);
+        VF.data.correctStreak += 1;
+        VF.data.answersTally._correct +=1;
         VF.utils.playSound(VF.sounds.correct);
         Play.showMessage(VF.messages.correct);
         Play.addCurrentToFinished();
     };
 
     Play.addCurrentToFinished = function(){
-        VF.data.finished[VF.data.currentDict.name].push(Play.currentWordIndex);
+        VF.data.finished[VF.data.currentDict].push(Play.currentWordIndex);
     };
 
     Play.answerIsWrong = function(){
         $('input[name="play-answer"][value="0"]', '#play').next('label').addClass('ui-btn-up-g');
         Play.updateWrongScore(1);
+        VF.data.correctStreak = 0;
+        VF.data.answersTally._wrong +=1;
         VF.utils.playSound(VF.sounds.wrong);
         Play.showMessage(VF.messages.wrong);
     };
 
     Play.updateCorrectScore = function(points){
-        var tally = VF.data.answersTally[VF.data.currentDict.name];
+        var tally = VF.data.answersTally[VF.data.currentDict];
         if(tally){
-            VF.data.answersTally[VF.data.currentDict.name].correct += points;
+            VF.data.answersTally[VF.data.currentDict].correct += points;
         } else {
-            VF.data.answersTally[VF.data.currentDict.name] = {
+            VF.data.answersTally[VF.data.currentDict] = {
                 correct: points,
                 wrong: 0,
                 total: VF.data.currentDictLength
             };
         }
-        $('#correct').html(VF.data.answersTally[VF.data.currentDict.name].correct);
+        $('#correct').html(VF.data.answersTally[VF.data.currentDict].correct);
     };
     Play.updateWrongScore = function(points){
-        var tally = VF.data.answersTally[VF.data.currentDict.name];
+        var tally = VF.data.answersTally[VF.data.currentDict];
         if(tally){
-            VF.data.answersTally[VF.data.currentDict.name].wrong += points;
+            VF.data.answersTally[VF.data.currentDict].wrong += points;
         } else {
-            VF.data.answersTally[VF.data.currentDict.name] = {
+            VF.data.answersTally[VF.data.currentDict] = {
                 correct: 0,
                 wrong: points,
                 total: Play.currentDictLength
             };
         }
-        $('#wrong').html(VF.data.answersTally[VF.data.currentDict.name].wrong);
+        $('#wrong').html(VF.data.answersTally[VF.data.currentDict].wrong);
     };
     Play.insertText = function(node, content){
         node.hide();
@@ -171,6 +175,10 @@
         $('input[name="play-answer"]', '#play').each(function(){
             $(this).prop('checked', false).checkboxradio("refresh");
         });
+        
+        
+        VF.trophyCheck();
+        
         if(VF.data.gameType.indexOf('Time')!==-1){
             Play.startTimer();
         }
@@ -209,11 +217,11 @@
     Play.getNewItem = function(isRandom){
         var wordNum = VF.utils.getRandomInt(0,VF.data.currentDictLength);
         while(((isRandom) ? Play.currentWordIndex === wordNum
-                : $.inArray(wordNum, VF.data.finished[VF.data.currentDict.name]) !== -1)){
+                : $.inArray(wordNum, VF.data.finished[VF.data.currentDict]) !== -1)){
             wordNum = VF.utils.getRandomInt(0,VF.data.currentDictLength);
         }
         if(!isRandom) Play.currentWordIndex = wordNum;
-        return VF.data.currentDict.list[wordNum];
+        return VF.resources[VF.data.currentDict].list[wordNum];
     };
 
 })(window.VF.controllers.play = VF.controllers.play || {}, document);

@@ -5,12 +5,12 @@
         var listsHtml = '',
             resNames = [],
             sortedResources = [];
-        $.each(VF.data.resources, function(){
+        $.each(VF.resources, function(){
             resNames.push(this.name);
         });
         resNames.sort();
         $.each(resNames, function(){
-            sortedResources.push(VF.data.resources[this]);
+            sortedResources.push(VF.resources[this]);
         });
 
         var categories = {};
@@ -30,16 +30,14 @@
         $('#selectlist-wordLists').append(listsHtml).fieldcontain('refresh', true);
 
         $('#selectlist-play').click(function(){
+            console.log(VF);
             var dictName = $('#selectlist-wordLists input:radio[name=selectlist-wordList]:checked').val(),
-                dict = SelectList.selectDict(dictName),
+                dict = VF.resources[dictName],
                 dictLength = dict.list.length;
-            VF.data.currentDict = dict;
+            VF.data.currentDict = dictName;
             VF.data.currentDictLength = dictLength;
             $.mobile.changePage('type.html');
         });
-    };
-    SelectList.selectDict = function(name){
-        return VF.data.resources[name];
     };
     SelectList.startCategory = function(category){
         var template = '<h2 style="margin-bottom: 1px; padding: 3px 0px 3px 6px;" class="ui-title ui-bar-b ui-shadow ui-corner-all">${category}</h2>';

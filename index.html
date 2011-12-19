@@ -24,6 +24,7 @@
     <link rel="shortcut icon" href="favicon.ico">
     <script src="src/app.js"></script>
     <script src="src/utils.js"></script>
+    <script src="src/trophies.js"></script>
 
     <!-- Views -->
     <script src="src/controllers/type.js"></script>
@@ -31,6 +32,7 @@
     <script src="src/controllers/play.js"></script>
     <script src="src/controllers/statistics.js"></script>
     <script src="src/controllers/settings.js"></script>
+    <script src="src/controllers/trophy.js"></script>
 </head>
 <body>
 <div data-role="page" id="home">
@@ -42,11 +44,25 @@
         <ul data-role="listview" id="home-list">
             <li><a href="src/views/selectlist.html">Play</a></li>
             <li><a href="src/views/statistics.html">Stats</a></li>
+            <li><a href="src/views/trophy.html">Trophies</a></li>
             <li><a href="src/views/settings.html">Settings</a></li>
             <li><a href="src/views/about.html">About</a></li>
         </ul>
     </div>
 </div>
+
+<div data-role="dialog" id="message" data-transition="pop">
+    <div data-role="header" data-theme="b">
+    	<h1 id="message-title"></h1>
+	</div>
+	<div data-role="content">
+        <a href="#" class="ui-link-inherit">
+        <img id="message-icon" src="" class="ui-li-thumb">
+        <h3 class="ui-li-heading" id="message-message"></h3>
+        </a>
+    </div>
+</div>
+
 
 <!-- audio -->
 <audio id="sound-correct" hidden="true" preload="auto">
