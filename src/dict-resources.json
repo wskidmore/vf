@@ -9,6 +9,21 @@
             "name": "GRE",
             "description": "Words commonly seen in Graduate Record Examinations",
             "file": "src/dict/gre.json"
+        },
+        {
+            "name": "Phobias",
+            "description": "List of all phobias and their associated fear",
+            "file": "src/dict/phobia.json"
+        },
+        {
+            "name": "US State Capitals",
+            "description": "States as words with their capitals as definitions",
+            "file": "src/dict/us_statecap.json"
+        },
+        {
+            "name": "World Capitals",
+            "description": "Countries as words with their capitals as definitions",
+            "file": "src/dict/world_cap.json"
         }
     ]
 }
