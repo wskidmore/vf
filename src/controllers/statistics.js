@@ -9,14 +9,25 @@
             statContent.push(Stats.addBar(dict, VF.data.answersTally[dict]));
         }
         $('#statistics-list').append(statContent.join(''));
+        $('a.statsclear', '#statistics-list').each(function(){
+            $(this).click(function(){
+                var id = this.id.split('-')[1],
+                    correct = VF.data.answersTally[id].correct,
+                    wrong = VF.data.answersTally[id].wrong;
+                VF.data.answersTally._correct -= correct;
+                VF.data.answersTally._wrong -= wrong;
+                delete VF.data.answersTally[id];
+                VF.save();
+                VF.showMessage('Cleared', 'All save data for this item is erased');
+            	Stats.addTotals();
+            });
+        });
         Stats.applySizes();
-		
-		
 		Stats.addTotals();
 		
     };
 	
-	Stats.addTotals = function(correct, wrong){
+	Stats.addTotals = function(){
         var correct= VF.data.answersTally._correct,
             wrong = VF.data.answersTally._wrong,
 		    accuracy = ( (correct / (correct+wrong)) * 100).toFixed(2);
@@ -54,6 +65,7 @@
                 '">',
                 '</div>',
             '</div>',
+            '<a href="#" class="statsclear" id="statsclear-'+name+'" data-role="button" data-inline="true">Clear Save Data</a>',
             '</div>'
         ].join('');
         return VF.utils.sub(template, answerInfo);
