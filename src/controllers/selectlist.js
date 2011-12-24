@@ -25,12 +25,12 @@
             $.each(categories[key], function(index, item){
                 listsHtml += SelectList.addList(item);
             });
+            listsHtml += SelectList.endCategory;
         };
-
-        $('#selectlist-wordLists').append(listsHtml).fieldcontain('refresh', true);
+        $('#selectlist-wordLists').append(listsHtml)
+        $('#selectlist-wordList').fieldcontain('refresh', true);
 
         $('#selectlist-play').click(function(){
-            console.log(VF);
             var dictName = $('#selectlist-wordLists input:radio[name=selectlist-wordList]:checked').val(),
                 dict = VF.resources[dictName],
                 dictLength = dict.list.length;
@@ -40,9 +40,10 @@
         });
     };
     SelectList.startCategory = function(category){
-        var template = '<h2 style="margin-bottom: 1px; padding: 3px 0px 3px 6px;" class="ui-title ui-bar-b ui-shadow ui-corner-all">${category}</h2>';
+        var template = '<div class="ui-selectlist-cat"><h2 style="margin-bottom: 0px; padding: 3px 0px 3px 6px;" class="ui-title ui-bar-b ui-shadow ui-corner-top">${category}</h2>';
         return VF.utils.sub(template,{category:category});
     };
+    SelectList.endCategory = '</div>';
     SelectList.addList = function(list){
         var template = '<input type="radio" name="selectlist-wordList" id="radio-${name}" value="${name}" />'+
         '<label for="radio-${name}">${name}</label>';

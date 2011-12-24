@@ -1,8 +1,33 @@
+#selectlist-wordLists .ui-selectlist-cat > .ui-radio > label
+{
+-moz-border-radius-topleft: 0 !important;
+-webkit-border-top-left-radius: 0 !important;
+border-top-left-radius: 0 !important;
+-moz-border-radius-topright: 0 !important;
+-webkit-border-top-right-radius: 0 !important;
+border-top-right-radius: 0 !important;
+}
+
+#selectlist-wordLists .ui-selectlist-cat > .ui-radio:last-child > label
+{
+-moz-border-radius-bottomleft: .6em;
+-webkit-border-bottom-left-radius: .6em;
+border-bottom-left-radius: .6em;
+-moz-border-radius-bottomright: .6em;
+-webkit-border-bottom-right-radius: .6em;
+border-bottom-right-radius: .6em;
+border-bottom-width: 1px;
+}
+
+
+
+
+
+
 p
 {
     margin: 3px 0px 3px 0px;
 }
-
 #message-message {
 margin-left: 70px;
 }
