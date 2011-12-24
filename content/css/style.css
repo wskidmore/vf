@@ -19,7 +19,11 @@ border-bottom-right-radius: .6em;
 border-bottom-width: 1px;
 }
 
-
+.minor
+{
+    font-weight:normal;
+    font-size:12px;
+}
 
 
 
