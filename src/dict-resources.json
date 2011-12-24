@@ -21,32 +21,38 @@
         {
             "name": "US State Capitals",
             "category":"Geography",
-            "description": "States as words with their capitals as definitions",
+            "description": "Associate a US State with its capital city",
             "file": "src/dict/us_statecap.json"
         },
         {
             "name": "World Capitals",
             "category":"Geography",
-            "description": "Countries as words with their capitals as definitions",
+            "description": "Associate any country with its capital city",
             "file": "src/dict/world_cap.json"
         },
         {
             "name": "Legal/Court Terms",
             "category":"Civil",
-            "description": "Various legal and court related terms and definitions",
+            "description": "Various legal and court related terms",
             "file": "src/dict/court.json"
         },
         {
             "name": "Ancient History Events",
             "category":"History",
-            "description": "Ancient History (pre-AD) events with the year as the word and event as definition",
+            "description": "Associate key pre-AD events with the year they occurred",
             "file": "src/dict/ancienthist.json"
         },
         {
             "name": "Famouse World Buildings",
             "category":"Geography",
-            "description": "Famous buildings and the city they are located in are the word and definition, respectively.",
+            "description": "Famous buildings and the city they are located",
             "file": "src/dict/buildings.json"
+        },
+        {
+            "name": "Ologies",
+            "category":"Science",
+            "description": "List of all -ology words and their field of study",
+            "file": "src/dict/ology.json"
         }
     ]
 }
