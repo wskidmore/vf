@@ -46,7 +46,7 @@
     SelectList.endCategory = '</div>';
     SelectList.addList = function(list){
         var template = '<input type="radio" name="selectlist-wordList" id="radio-${name}" value="${name}" />'+
-        '<label for="radio-${name}">${name}</label>';
+        '<label for="radio-${name}">${name} - <span class="minor">${description}</span></label>';
         return VF.utils.sub(template,list);
     };
     SelectList.init = function(){
