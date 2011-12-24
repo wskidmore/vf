@@ -2,28 +2,51 @@
     "dictionaries": [
         {
 			"name": "SAT",
+            "category":"English",
 			"description": "Words commonly seen in Scholastic Aptitude Tests",
 			"file": "src/dict/sat.json"
         },
         {
             "name": "GRE",
+            "category":"English",
             "description": "Words commonly seen in Graduate Record Examinations",
             "file": "src/dict/gre.json"
         },
         {
             "name": "Phobias",
+            "category":"Science",
             "description": "List of all phobias and their associated fear",
             "file": "src/dict/phobia.json"
         },
         {
             "name": "US State Capitals",
+            "category":"Geography",
             "description": "States as words with their capitals as definitions",
             "file": "src/dict/us_statecap.json"
         },
         {
             "name": "World Capitals",
+            "category":"Geography",
             "description": "Countries as words with their capitals as definitions",
             "file": "src/dict/world_cap.json"
+        },
+        {
+            "name": "Legal/Court Terms",
+            "category":"Civil",
+            "description": "Various legal and court related terms and definitions",
+            "file": "src/dict/court.json"
+        },
+        {
+            "name": "Ancient History Events",
+            "category":"History",
+            "description": "Ancient History (pre-AD) events with the year as the word and event as definition",
+            "file": "src/dict/ancienthist.json"
+        },
+        {
+            "name": "Famouse World Buildings",
+            "category":"Geography",
+            "description": "Famous buildings and the city they are located in are the word and definition, respectively.",
+            "file": "src/dict/buildings.json"
         }
     ]
 }
