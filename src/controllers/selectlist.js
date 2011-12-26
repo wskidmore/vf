@@ -30,7 +30,7 @@
         $('#selectlist-wordLists').append(listsHtml)
         $('#selectlist-wordList').fieldcontain('refresh', true);
 
-        $('#selectlist-play').click(function(){
+        $('.selectlist-play', '#selectlist').click(function(){
             var dictName = $('#selectlist-wordLists input:radio[name=selectlist-wordList]:checked').val(),
                 dict = VF.resources[dictName],
                 dictLength = dict.list.length;

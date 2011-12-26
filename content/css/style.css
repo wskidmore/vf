@@ -1,3 +1,11 @@
+.ui-grid-a .ui-block-c, .ui-grid-a .ui-block-d { width: 50%; }
+.ui-grid-a .ui-block-c { clear: left; }
+
+.emphasis
+{
+    font-size:16px !important;
+}
+
 #selectlist-wordLists .ui-selectlist-cat > .ui-radio > label
 {
 -moz-border-radius-topleft: 0 !important;
@@ -175,8 +183,8 @@ margin-top: 3px;
 .ui-btn-up-g,
 .ui-btn-hover-g,
 .ui-btn-down-g {
-  text-shadow: 0 -1px 0px #94440F;
-  cursor: pointer;
+text-shadow: 0 -1px 1px black;
+cursor: pointer;
   font-weight: bold;
   text-decoration: none;
   font-family: Helvetica, Arial, sans-serif;
@@ -227,8 +235,7 @@ margin-top: 3px;
 .ui-btn-up-r,
 .ui-btn-hover-r,
 .ui-btn-down-r {
-  text-shadow: 0 -1px 0px #94440F;
-  cursor: pointer;
+text-shadow: 0 -1px 1px black;  cursor: pointer;
   font-weight: bold;
   text-decoration: none;
   font-family: Helvetica, Arial, sans-serif;

@@ -43,7 +43,7 @@
             "file": "src/dict/ancienthist.json"
         },
         {
-            "name": "Famouse World Buildings",
+            "name": "Famous World Buildings",
             "category":"Geography",
             "description": "Famous buildings and the city they are located",
             "file": "src/dict/buildings.json"

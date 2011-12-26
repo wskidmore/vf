@@ -1,15 +1,19 @@
 <div data-role="page" id="play">
-	<div data-role="header" data-theme="b">
+	<div data-role="header" data-theme="b" data-position="fixed">
         <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"></a>
 		<h1 id="playTitle">Vocab Fun</h1>
-        <div data-type="horizontal" data-role="controlgroup" style="top:-3px;position:absolute;float:right;z-index:10;display:inline;" align="right" class="ui-btn-right">
-            <a href="statistics.html" data-role="button" data-icon="check" data-theme="g"><span id="correct">0</span></a>
+        <div id="stat-set" data-type="horizontal" data-role="controlgroup" style="top:-3px;position:absolute;float:right;z-index:10;display:inline;" align="right" class="ui-btn-right">
             <a href="statistics.html" data-role="button" data-icon="delete" data-theme="r"><span id="wrong">0</span></a>
+            <a href="statistics.html" data-role="button" data-icon="check" data-theme="g"><span id="correct">0</span></a>
         </div>
+    <div data-role="navbar" id="play-time-nav">
+		<ul>
+        	<li id="time"><a href="#" data-theme="e">0:00</a></li>
+    	</ul>
+	</div><!-- /navbar -->
 	</div>
 
 	<div data-role="content" class="play-content">
-        <h3 id="word"><span>Word</span></h3>
         <div data-role="fieldcontain">
             <fieldset data-role="controlgroup" id="play-answers">
                 <input type="radio" name="play-answer" id="play-answer0" value="worda" /><label for="play-answer0" class="play-label"></label>
@@ -18,7 +22,16 @@
                 <input type="radio" name="play-answer" id="play-answer3" value="wordd" /><label for="play-answer3" class="play-label"></label>
             </fieldset>
         </div>
-        <div id="play-submit-div" class="majorButton"><button id="play-submit" data-theme="e">Submit</button></div>
-        <div id="play-next-div" class="majorButton"><button id="play-next" data-theme="e" class="ui-btn-hidden" data-icon="arrow-r" data-iconpos="right">Next</button></div>
     </div>
+    
+<div data-role="footer" data-position="fixed">    	
+	<div data-role="navbar" data-iconpos="top">
+		<ul id="play-footer-nav">
+        	<li id="play-skip"><a href="#" data-theme="r" class="emphasis" data-icon="forward">Skip</a></li>
+			<li id="play-submit"><a href="#" data-theme="g" class="emphasis" data-icon="check">Submit</a></li>
+            <li id="play-message"><a href="#" data-theme="e" class="emphasis" data-icon="info">Message</a></li>
+    		<li id="play-next"><a href="#" data-theme="g" class="emphasis" data-icon="arrow-r">Next</a></li>
+		</ul>
+	</div><!-- /navbar -->
+</div><!-- /footer -->    
 </div>

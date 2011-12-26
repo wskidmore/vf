@@ -1,14 +1,15 @@
 <div data-role="page" id="selectlist">
-	<div data-role="header" data-theme="b">
+	<div data-role="header" data-theme="b" data-position="fixed">
         <a href="#home" data-role="button" data-icon="home">Home</a>
-		<h1>Lists</h1>
-	</div>
+		<h1>Word Sets</h1>
+        <a href="#" data-icon="check" data-theme="g" class="selectlist-play">Play</a>
+    </div>
 
 	<div data-role="content">
         <div>Select the set of words you would like to learn with:</div>
         <div data-role="fieldcontain">
             <fieldset data-role="controlgroup"  id="selectlist-wordLists"></fieldset>
         </div>
-        <div class="majorButton"><button id="selectlist-play" data-theme="e">Play!</button></div>
+        <div class="majorButton"><button class="selectlist-play" data-theme="e">Play!</button></div>
     </div>
 </div>

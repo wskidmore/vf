@@ -18,21 +18,32 @@
 
         $('#play-submit').click(Play.selectAnswer);
         $('#play-next').click(Play.next);
-        $('#play-next-div').hide();
+        $('#play-skip').click(Play.skip);
+        $('#play-next').hide();
+        $('#play-message').hide();
+        if(VF.data.gameType.indexOf('Time')==-1){
+            $('#play-time-nav').hide();
+        }
 
         Play.updateCorrectScore(0);
         Play.updateWrongScore(0);
     };
-    Play.init = function(){
+    Play.skip = function(){
+        Play.selectAnswer(true);
     };
-    Play.selectAnswer = function(){
+    Play.init = function(){
+        $('#play-footer-nav').removeClass('ui-grid-c').addClass('ui-grid-a');
+    };
+    Play.selectAnswer = function(isSkip){
         var selectedElement = $('input[name="play-answer"]:checked', '#play');
+        if(selectedElement.length === 0 && !isSkip) return;
         Play.endTimer();
-
-        if(selectedElement.length === 0) return;
-        $('#play-submit-div').hide();
-        $('#play-next-div').show();
-        switch(selectedElement.val()){
+        $('#play-skip').hide();
+        $('#play-message').show();
+        $('#play-submit').hide();
+        $('#play-next').show();
+        var isCorrect = (isSkip === true) ? '-1' : selectedElement.val();
+        switch(isCorrect){
             case '0':
                 selectedElement.next('label').addClass('ui-btn-up-g');
                 Play.answerIsCorrect();
@@ -41,13 +52,23 @@
                 selectedElement.next('label').addClass('ui-btn-up-r');
                 Play.answerIsWrong();
             break;
+            case '-1':
+                Play.answerIsSkipped();
+            break;
         }
         VF.save();
     };
     Play.showMessage = function(message){
         if($.isArray(message))
             message = VF.utils.randomArrayEl(message);
-        $('#playTitle').text(message);
+        $('#play-message').find('span.ui-btn-text').first().html(message);
+    };
+    Play.answerIsSkipped = function(){
+        console.log('skipping');
+        $('input[name="play-answer"][value="0"]', '#play').next('label').addClass('ui-btn-up-g');
+        VF.data.correctStreak = 0;
+        Play.updateWrongScore(0);
+        Play.showMessage(VF.messages.wrong);
     };
     
     Play.answerIsCorrect = function(){
@@ -99,15 +120,14 @@
         $('#wrong').html(VF.data.answersTally[VF.data.currentDict].wrong);
     };
     Play.insertText = function(node, content){
-        node.hide();
+        node.css({opacity:0});
         node.text(content);
-        node.show('slow');
+        node.animate({opacity:1}, 800);
     };
 
     Play.updateHtml = function(){
         Play.cleanCSS();
-
-        Play.insertText($('#word'), Play.currentWord);
+        Play.insertText($('#playTitle'), Play.currentWord);
         var answerIds = [0,1,2,3],
             correctId = VF.utils.getRandomInt(0,4),
             i=3;
@@ -137,41 +157,49 @@
         });
     };
     Play.startTimer = function(){
-        Play.time = VF.timers[VF.data.gameType];
+        $('#play-time-nav').show();
+        var now = new Date();
+        var toAdd = (parseFloat(VF.timers[VF.data.gameType],10)*1000);
+        var total = now.getTime() + toAdd;
+        Play.time = new Date(total);
         Play.timer = setTimeout(Play.updateTimer,1000);
     };
     Play.updateTimer = function(){
-        var seconds = Play.time,
+        var now = new Date();
+        var ms = Play.time.getTime() - now.getTime();
+        console.log(now.getTime(), Play.time.getTime(), ms);
+        var seconds = Math.floor(ms/1000),
             minutes = 0;
 
         while(seconds>=60){
             minutes += 1;
             seconds -= 60;
         }
-        Play.time -= 1;
-        $('#playTitle').html( VF.utils.padTo(minutes,2)+':'+VF.utils.padTo(seconds,2));
+        $('#time span.ui-btn-text').text( VF.utils.padTo(minutes,2)+':'+VF.utils.padTo(seconds,2));
 
 
         if(seconds === 0) {
-            $('#play-submit-div').hide();
-            $('#play-next-div').show();
+            $('#play-skip').hide();
+            $('#play-message').show();
+            $('#play-submit').hide();
+            $('#play-next').show();
             Play.answerIsWrong();
+            VF.save();
         } else {
-            Play.timer = setTimeout(Play.updateTimer, 1000);
+            Play.timer = setTimeout(Play.updateTimer, 500);
         }
     };
     Play.endTimer = function(){
         clearTimeout(Play.timer);
     };
-    Play.setDefaultTitle = function(){
-        Play.showMessage(VF.name);
-    };
     Play.next = function(){
         var type = 'next'+VF.data.gameType.replace('Timed','');
+        $('#play-time-nav').hide();
         Play[type]();
-        $('#play-submit-div').show();
-        $('#play-next-div').hide();
-        Play.setDefaultTitle();
+        $('#play-skip').show();
+        $('#play-message').hide();
+        $('#play-submit').show();
+        $('#play-next').hide();
         $('input[name="play-answer"]', '#play').each(function(){
             $(this).prop('checked', false).checkboxradio("refresh");
         });
