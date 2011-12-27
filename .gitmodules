@@ -1,0 +1,9 @@
+[submodule "lib/jquery-mobile"]
+	path = lib/jquery-mobile
+	url = git@github.com:jquery/jquery-mobile
+[submodule "lib/json-js"]
+	path = lib/json-js
+	url = git@github.com:douglascrockford/JSON-js
+[submodule "lib/yappo"]
+	path = lib/yappo
+	url = git@github.com:yappo/javascript-jquery.mobile.iscroll
