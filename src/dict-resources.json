@@ -37,10 +37,22 @@
             "file": "src/dict/court.json"
         },
         {
-            "name": "Ancient History Events",
+            "name": "Ancient Historic Events",
             "category":"History",
             "description": "Associate key pre-AD events with the year they occurred",
             "file": "src/dict/ancienthist.json"
+        },
+        {
+            "name": "Early Historic Events",
+            "category":"History",
+            "description": "Associate key events during 1AD-1500AD with the year they occurred",
+            "file": "src/dict/earlyhist.json"
+        },
+        {
+            "name": "American History",
+            "category":"History",
+            "description": "Associate key American (colonial-present) events with the year they occurred",
+            "file": "src/dict/americanhist.json"
         },
         {
             "name": "Famous World Buildings",
