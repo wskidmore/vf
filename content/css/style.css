@@ -1,5 +1,24 @@
-.ui-grid-a .ui-block-c, .ui-grid-a .ui-block-d { width: 50%; }
+#play-question
+{
+font-size:18px;
+padding: 5px;
+text-align:center;
+}
+
+#play .ui-content
+{
+padding: 0px 15px 15px 15px !important;
+}
+
+#play-question:first-letter{
+text-transform:capitalize;
+}
+
+.ui-grid-a .ui-block-c { width: 100%; }
 .ui-grid-a .ui-block-c { clear: left; }
+.ui-grid-b .ui-block-a, .ui-grid-b .ui-block-b {
+width: 50%;
+}
 
 .emphasis
 {

@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Libraries -->
-    <link href="lib/compressed/jquery.mobile.min.css" rel="stylesheet" media="screen">
+    <link href="lib/compressed/jquery.mobile.min.css" rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="content/css/style.css" media="screen" />
     <script src="lib/compressed/jquery.1.6.4.min.js"></script>
     <script>
+    (function(){var all = $.event.props,len = all.length,res = [];while (len--) {var el = all[len];if (el != 'layerX' && el != 'layerY') res.push(el);}$.event.props = res;}());
     $.support.cors = true;
     $(document).bind("mobileinit", function(){
       $.extend(  $.mobile , {
@@ -18,11 +20,10 @@
     });    
     </script>
     <script src="lib/compressed/jquery.mobile.min.js"></script>
-    <script src="lib/compress/jquery.iscroll.min.js"></script>
+    <script src="lib/compressed/jquery.iscroll.min.js"></script>
 
     <!-- Application -->
-    <link rel="stylesheet" href="content/css/style.css" media="screen">
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" />
     <script src="src/app.js"></script>
     <script src="src/utils.js"></script>
     <script src="src/trophies.js"></script>

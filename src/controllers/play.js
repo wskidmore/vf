@@ -20,7 +20,6 @@
         $('#play-next').click(Play.next);
         $('#play-skip').click(Play.skip);
         $('#play-next').hide();
-        $('#play-message').hide();
         if(VF.data.gameType.indexOf('Time')==-1){
             $('#play-time-nav').hide();
         }
@@ -39,7 +38,6 @@
         if(selectedElement.length === 0 && !isSkip) return;
         Play.endTimer();
         $('#play-skip').hide();
-        $('#play-message').show();
         $('#play-submit').hide();
         $('#play-next').show();
         var isCorrect = (isSkip === true) ? '-1' : selectedElement.val();
@@ -61,10 +59,9 @@
     Play.showMessage = function(message){
         if($.isArray(message))
             message = VF.utils.randomArrayEl(message);
-        $('#play-message').find('span.ui-btn-text').first().html(message);
+        $('#play-message').html(message);
     };
     Play.answerIsSkipped = function(){
-        console.log('skipping');
         $('input[name="play-answer"][value="0"]', '#play').next('label').addClass('ui-btn-up-g');
         VF.data.correctStreak = 0;
         Play.updateWrongScore(0);
@@ -76,7 +73,6 @@
         VF.data.correctStreak += 1;
         VF.data.answersTally._correct +=1;
         VF.utils.playSound(VF.sounds.correct);
-        Play.showMessage(VF.messages.correct);
         Play.addCurrentToFinished();
     };
 
@@ -90,7 +86,6 @@
         VF.data.correctStreak = 0;
         VF.data.answersTally._wrong +=1;
         VF.utils.playSound(VF.sounds.wrong);
-        Play.showMessage(VF.messages.wrong);
     };
 
     Play.updateCorrectScore = function(points){
@@ -127,7 +122,7 @@
 
     Play.updateHtml = function(){
         Play.cleanCSS();
-        Play.insertText($('#playTitle'), Play.currentWord);
+        Play.insertText($('#play-question'), Play.currentWord);
         var answerIds = [0,1,2,3],
             correctId = VF.utils.getRandomInt(0,4),
             i=3;
@@ -157,7 +152,6 @@
         });
     };
     Play.startTimer = function(){
-        $('#play-time-nav').show();
         var now = new Date();
         var toAdd = (parseFloat(VF.timers[VF.data.gameType],10)*1000);
         var total = now.getTime() + toAdd;
@@ -167,7 +161,6 @@
     Play.updateTimer = function(){
         var now = new Date();
         var ms = Play.time.getTime() - now.getTime();
-        console.log(now.getTime(), Play.time.getTime(), ms);
         var seconds = Math.floor(ms/1000),
             minutes = 0;
 
@@ -175,12 +168,11 @@
             minutes += 1;
             seconds -= 60;
         }
-        $('#time span.ui-btn-text').text( VF.utils.padTo(minutes,2)+':'+VF.utils.padTo(seconds,2));
+        $('#play-message').text( VF.utils.padTo(minutes,2)+':'+VF.utils.padTo(seconds,2));
 
 
         if(seconds === 0) {
             $('#play-skip').hide();
-            $('#play-message').show();
             $('#play-submit').hide();
             $('#play-next').show();
             Play.answerIsWrong();
@@ -197,7 +189,6 @@
         $('#play-time-nav').hide();
         Play[type]();
         $('#play-skip').show();
-        $('#play-message').hide();
         $('#play-submit').show();
         $('#play-next').hide();
         $('input[name="play-answer"]', '#play').each(function(){
