@@ -11,6 +11,7 @@
         $('#settings-clear').click(function(){
             if (window.localStorage)
                 window.localStorage.clear();
+			VF.removeResume();
             alert('All Saved Data Erased');
         });
         

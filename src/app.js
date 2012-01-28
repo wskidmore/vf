@@ -37,6 +37,7 @@
 
     VF.save = function(){
         VF.utils.setObject('vfdata', VF.data);
+		VF.addResume();
     };
     VF.load = function(){
         var loaded = VF.utils.getObject('vfdata');
@@ -55,16 +56,24 @@
         var loaded = VF.load();
         if(loaded)
             VF.addResume();
-        VF.initNodeScroll();
-        $( $.mobile.initializePage );
+
+		$( $.mobile.initializePage );
     };
     VF.addResume = function(){
-        var link = $('<li><a href="#">Resume</a></li>');
+		if ($('#home-resume').length) return;
+        var link = $('<li id="home-resume"><a href="#">Resume</a></li>');
         $('#home-list').prepend(link);
         link.click(function(){
             VF.startGame('src/views/');
         });
+		var list = $('#home-list');
+		if(list.hasClass('ui-listview'))
+			list.listview("refresh");
     };
+	VF.removeResume = function(){
+		$('#home-resume').remove();
+		$('#home-list').listview("refresh");
+	};
     VF.startGame = function(root){
         VF.loadAttempts++;
         if(VF.data.numDicts > 0) {

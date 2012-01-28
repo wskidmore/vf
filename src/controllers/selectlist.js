@@ -20,13 +20,20 @@
             else
                 categories[this.category] = [this];
         });
-        for(var key in categories){
+
+		var cats = [];
+		for (var key in categories){
+			cats.push(key);
+		}
+		cats.sort();
+		
+		$.each(cats, function(i, key){
             listsHtml += SelectList.startCategory(key);
             $.each(categories[key], function(index, item){
                 listsHtml += SelectList.addList(item);
             });
             listsHtml += SelectList.endCategory;
-        };
+        });
         $('#selectlist-wordLists').append(listsHtml)
         $('#selectlist-wordList').fieldcontain('refresh', true);
 

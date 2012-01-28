@@ -73,6 +73,7 @@
         VF.data.correctStreak += 1;
         VF.data.answersTally._correct +=1;
         VF.utils.playSound(VF.sounds.correct);
+        Play.showMessage(VF.messages.correct);
         Play.addCurrentToFinished();
     };
 
@@ -86,6 +87,7 @@
         VF.data.correctStreak = 0;
         VF.data.answersTally._wrong +=1;
         VF.utils.playSound(VF.sounds.wrong);
+        Play.showMessage(VF.messages.wrong);
     };
 
     Play.updateCorrectScore = function(points){
@@ -194,6 +196,7 @@
         $('input[name="play-answer"]', '#play').each(function(){
             $(this).prop('checked', false).checkboxradio("refresh");
         });
+        Play.showMessage('');
         
         
         VF.trophyCheck();
