@@ -52,3 +52,5 @@ More modes are planned.
 ### list: [array of objects]
 
 List is an array of word objects. A word object has two keys, word and def. The word value will be a string of a single word. The def value will be the correlating definition of the word.
+
+---
